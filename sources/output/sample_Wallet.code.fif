@@ -113,22 +113,30 @@ PROGRAM{
     s1 s3 XCHG
     THROWANYIFNOT
     32 LDI
-    8 LDI
-    LDREF
-    DROP
     17654 PUSHINT
-    s3 s6 XCPU
+    s2 s5 XCPU
     EQUAL
-    s1 s3 XCHG
+    s1 s2 XCHG
     THROWANYIFNOT
-    s0 s2 XCHG
+    SWAP
     IF:<{
       ACCEPT
     }>
-    s0 s3 XCHG
+    s0 s2 XCHG
     INC
-    s3 s3 XCHG2
-    SENDRAWMSG
+    WHILE:<{
+      s2 PUSH
+      SREFS
+      0 GTINT
+    }>DO<{
+      s0 s2 XCHG
+      8 LDI
+      LDREF
+      s0 s2 XCHG
+      SENDRAWMSG
+      s0 s2 XCHG
+    }>
+    s2 POP
   }>
   $Wallet$_fun_seqno PROCREF:<{
     OVER

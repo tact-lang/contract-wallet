@@ -26,8 +26,6 @@ contract Wallet {
         // Check parameters
         let pkg: Slice = msg.transfer;
         let seqno: Int = pkg.loadInt(32);
-        let mode: Int = pkg.loadInt(8);
-        let body: Cell = pkg.loadRef();
         require(seqno == self.seqno, "Invalid seqno");
 
         // Accept message
@@ -38,8 +36,12 @@ contract Wallet {
         // Increment seqno
         self.seqno = (self.seqno + 1);
 
-        // Send message
-        nativeSendMessage(body, mode);
+        // Send messages
+        while(pkg.refs() > 0) {
+            let mode: Int = pkg.loadInt(8);
+            let body: Cell = pkg.loadRef();
+            nativeSendMessage(body, mode);
+        }
     }
 
     receive(msg: TransferMessage) {

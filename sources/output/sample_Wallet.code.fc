@@ -25,14 +25,16 @@
     throw_unless(48401, check_signature($op_hash, $msg'signature, $self'publicKey));
     slice $pkg = $msg'transfer;
     int $seqno = $pkg~load_int(32);
-    int $mode = $pkg~load_int(8);
-    cell $body = $pkg~load_ref();
     throw_unless(17654, ($seqno == $self'seqno));
     if ($external) {
         accept_message();
     }
     $self'seqno = ($self'seqno + 1);
-    send_raw_message($body, $mode);
+    while ((slice_refs($pkg) > 0)) {
+        int $mode = $pkg~load_int(8);
+        cell $body = $pkg~load_ref();
+        send_raw_message($body, $mode);
+    }
     return (($self'publicKey, $self'seqno, $self'walletId), ());
 }
 
