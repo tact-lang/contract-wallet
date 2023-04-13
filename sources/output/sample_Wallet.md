@@ -1,9 +1,9 @@
 # TACT Compilation Report
-Contract: SampleTactContract
-BOC Size: 850 bytes
+Contract: Wallet
+BOC Size: 790 bytes
 
 # Types
-Total Types: 6
+Total Types: 7
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -25,14 +25,18 @@ Signature: `Deploy{queryId:uint64}`
 TLB: `deploy_ok#aff90f57 queryId:uint64 = DeployOk`
 Signature: `DeployOk{queryId:uint64}`
 
-## Add
-TLB: `add#87d43ac2 amount:uint32 = Add`
-Signature: `Add{amount:uint32}`
+## FactoryDeploy
+TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
+Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
+
+## TransferMessage
+TLB: `transfer_message#d3817806 signature:fixed_bytes64 transfer:remainder<slice> = TransferMessage`
+Signature: `TransferMessage{signature:fixed_bytes64,transfer:remainder<slice>}`
 
 # Get Methods
 Total Get Methods: 1
 
-## counter
+## seqno
 
 # Error Codes
 2: Stack undeflow
@@ -59,4 +63,5 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-4429: Invalid sender
+17654: Invalid seqno
+48401: Invalid signature

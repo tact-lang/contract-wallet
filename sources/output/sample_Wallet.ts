@@ -271,72 +271,126 @@ function dictValueParserDeployOk(): DictionaryValue<DeployOk> {
     }
 }
 
-export type Add = {
-    $$type: 'Add';
-    amount: bigint;
+export type FactoryDeploy = {
+    $$type: 'FactoryDeploy';
+    queryId: bigint;
+    cashback: Address;
 }
 
-export function storeAdd(src: Add) {
+export function storeFactoryDeploy(src: FactoryDeploy) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(2278832834, 32);
-        b_0.storeUint(src.amount, 32);
+        b_0.storeUint(1829761339, 32);
+        b_0.storeUint(src.queryId, 64);
+        b_0.storeAddress(src.cashback);
     };
 }
 
-export function loadAdd(slice: Slice) {
+export function loadFactoryDeploy(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 2278832834) { throw Error('Invalid prefix'); }
-    let _amount = sc_0.loadUintBig(32);
-    return { $$type: 'Add' as const, amount: _amount };
+    if (sc_0.loadUint(32) !== 1829761339) { throw Error('Invalid prefix'); }
+    let _queryId = sc_0.loadUintBig(64);
+    let _cashback = sc_0.loadAddress();
+    return { $$type: 'FactoryDeploy' as const, queryId: _queryId, cashback: _cashback };
 }
 
-function loadTupleAdd(source: TupleReader) {
-    let _amount = source.readBigNumber();
-    return { $$type: 'Add' as const, amount: _amount };
+function loadTupleFactoryDeploy(source: TupleReader) {
+    let _queryId = source.readBigNumber();
+    let _cashback = source.readAddress();
+    return { $$type: 'FactoryDeploy' as const, queryId: _queryId, cashback: _cashback };
 }
 
-function storeTupleAdd(source: Add) {
+function storeTupleFactoryDeploy(source: FactoryDeploy) {
     let builder = new TupleBuilder();
-    builder.writeNumber(source.amount);
+    builder.writeNumber(source.queryId);
+    builder.writeAddress(source.cashback);
     return builder.build();
 }
 
-function dictValueParserAdd(): DictionaryValue<Add> {
+function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     return {
         serialize: (src, buidler) => {
-            buidler.storeRef(beginCell().store(storeAdd(src)).endCell());
+            buidler.storeRef(beginCell().store(storeFactoryDeploy(src)).endCell());
         },
         parse: (src) => {
-            return loadAdd(src.loadRef().beginParse());
+            return loadFactoryDeploy(src.loadRef().beginParse());
         }
     }
 }
 
- type SampleTactContract_init_args = {
-    $$type: 'SampleTactContract_init_args';
-    owner: Address;
+export type TransferMessage = {
+    $$type: 'TransferMessage';
+    signature: Buffer;
+    transfer: Cell;
 }
 
-function initSampleTactContract_init_args(src: SampleTactContract_init_args) {
+export function storeTransferMessage(src: TransferMessage) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeAddress(src.owner);
+        b_0.storeUint(3548477446, 32);
+        b_0.storeBuffer(src.signature);
+        b_0.storeBuilder(src.transfer.asBuilder());
     };
 }
 
-async function SampleTactContract_init(owner: Address) {
-    const __code = Cell.fromBase64('te6ccgECEAEAA0YAART/APSkE/S88sgLAQIBYgIDAX7QAdDTAwFxsMABkX+RcOIB+kABINdJgQELuvLgiCDXCwoggwm6IYEE/7qx8uCIgwm68uCJVFBTA28E+GEC+GIEAgFqDA0D4O1E0NQB+GPSAAGOKvpAASDXSYEBC7ry4Igg1wsKIIMJuiGBBP+6sfLgiIMJuvLgiQHTH1lsEo6z+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4IkB0ds84lrbPDAOBQYD2O2i7ftwIddJwh+VMCDXCx/eApJbf+AhghCH1DrCuo6VMdMfAYIQh9Q6wrry4IHTHwEx2zx/4CGCEJRqmLa6jqMx0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yds8f+ABwACRMOMNcAsHCABmyPhDAcx/AcoAWVkg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4InPFssfye1UARp/+EJwWAOAQgFtbds8CQFc+QGC8MT41yMS7f3vW3vseDO9uxYtFRG9eKkSrtDyY3r2VXKuuo6Gcds8f9sx4AsBzshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4InPFlAD+gJwAcpoI26zJW6zsZczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAKAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAB74QW8kW4ERTTIkxwXy9KAC4bdDHaiaGoA/DHpAADHFX0gAJBrpMCAhd15cEQQa4WFEEGE3RDAgn/dWPlwREGE3XlwRIDpj6y2CUdZ/BRrhYVBhN15cET9IACQa6TAgIXdeXBEEGuFhRBBhN0QwIJ/3Vj5cERBhN15cESA6O2ecW2eQDg8Albd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4ECrgDcAzscpnLB1XI5LZYcE4TsunLVmnZbmdB0s2yjN0UkAACcAACMQ==');
-    const __system = Cell.fromBase64('te6cckECEgEAA1AAAQHAAQEFoebTAgEU/wD0pBP0vPLICwMCAWIIBAIBagYFAJW3ejBOC52Hq6WVz2PQnYc6yVCjbNBOE7rGpaVsj5ZkWnXlv74sRzBOBAq4A3AM7HKZywdVyOS2WHBOE7Lpy1Zp2W5nQdLNsozdFJAC4bdDHaiaGoA/DHpAADHFX0gAJBrpMCAhd15cEQQa4WFEEGE3RDAgn/dWPlwREGE3XlwRIDpj6y2CUdZ/BRrhYVBhN15cET9IACQa6TAgIXdeXBEEGuFhRBBhN0QwIJ/3Vj5cERBhN15cESA6O2ecW2eQEQcAAjEBftAB0NMDAXGwwAGRf5Fw4gH6QAEg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4IlUUFMDbwT4YQL4YgkD4O1E0NQB+GPSAAGOKvpAASDXSYEBC7ry4Igg1wsKIIMJuiGBBP+6sfLgiIMJuvLgiQHTH1lsEo6z+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4IkB0ds84lrbPDARCwoAZsj4QwHMfwHKAFlZINdJgQELuvLgiCDXCwoggwm6IYEE/7qx8uCIgwm68uCJzxbLH8ntVAPY7aLt+3Ah10nCH5UwINcLH94Cklt/4CGCEIfUOsK6jpUx0x8BghCH1DrCuvLggdMfATHbPH/gIYIQlGqYtrqOozHTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J2zx/4AHAAJEw4w1wEA0MAVz5AYLwxPjXIxLt/e9be+x4M727Fi0VEb14qRKu0PJjevZVcq66joZx2zx/2zHgEAEaf/hCcFgDgEIBbW3bPA4BzshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCDCbohgQT/urHy4IiDCbry4InPFlAD+gJwAcpoI26zJW6zsZczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAPAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAB74QW8kW4ERTTIkxwXy9KAAAnCyhfqf');
+export function loadTransferMessage(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3548477446) { throw Error('Invalid prefix'); }
+    let _signature = sc_0.loadBuffer(64);
+    let _transfer = sc_0.asCell();
+    return { $$type: 'TransferMessage' as const, signature: _signature, transfer: _transfer };
+}
+
+function loadTupleTransferMessage(source: TupleReader) {
+    let _signature = source.readBuffer();
+    let _transfer = source.readCell();
+    return { $$type: 'TransferMessage' as const, signature: _signature, transfer: _transfer };
+}
+
+function storeTupleTransferMessage(source: TransferMessage) {
+    let builder = new TupleBuilder();
+    builder.writeBuffer(source.signature);
+    builder.writeSlice(source.transfer);
+    return builder.build();
+}
+
+function dictValueParserTransferMessage(): DictionaryValue<TransferMessage> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeTransferMessage(src)).endCell());
+        },
+        parse: (src) => {
+            return loadTransferMessage(src.loadRef().beginParse());
+        }
+    }
+}
+
+ type Wallet_init_args = {
+    $$type: 'Wallet_init_args';
+    publicKey: bigint;
+    walletId: bigint;
+}
+
+function initWallet_init_args(src: Wallet_init_args) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeInt(src.publicKey, 257);
+        b_0.storeInt(src.walletId, 257);
+    };
+}
+
+async function Wallet_init(publicKey: bigint, walletId: bigint) {
+    const __code = Cell.fromBase64('te6ccgECFQEAAwoAART/APSkE/S88sgLAQIBIAIDAgFIBAUCPPLbPFUC2zwwyPhDAcx/AcoAVSBQI8v/yz/LP8ntVBESAqbQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBQI8v/yz/LP8ntVBEGAgEgCgsC0HAh10nCH5UwINcLH94Cklt/4CGCENOBeAa6jpkx0x8BghDTgXgGuvLggYMI1xhmbBJw2zx/4AGCEJRqmLa6jqXTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIB2zx/4DBwFAcBFn8CcFiAQgFtbds8CAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAJAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+ZL7Z5tnjYYwRDAIBIA0OAAIhAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgPEAARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1OUzJqUnBTMXdKZVJ0QUVqRXoxdkt2Q2hzZTN1R1RMUGZnYjNZQ0VCYU15WYIAFi7UTQ1AH4Y9IAAZrT/9M/0z9VIGwT4Pgo1wsKgwm68uCJgQEB1wCBAQHXAFkC0QHbPBMBYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHAUAARwAQBQIfkBggC9EVFH+RAT8vTSH9IH1DCBRPZRNroT8vQCkvgA3gOkUDP7AA==');
+    const __system = Cell.fromBase64('te6cckECFwEAAxQAAQHAAQEFoHL9AgEU/wD0pBP0vPLICwMCASAGBAI88ts8VQLbPDDI+EMBzH8BygBVIFAjy//LP8s/ye1UFQUBYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHAUAgFIDwcCASANCAIBIAwJAgFICwoAdbJu40NWlwZnM6Ly9RbU5TMmpScFMxd0plUnRBRWpFejF2S3ZDaHNlM3VHVExQZmdiM1lDRUJhTXlZggABGwr7tRNDSAAGAAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIRvmS+2ebZ42GMFQ4AAiECptAB0NMDAXGwowH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIVFBTA28E+GEC+GLbPFUS2zzy4ILI+EMBzH8BygBVIFAjy//LP8s/ye1UFRAC0HAh10nCH5UwINcLH94Cklt/4CGCENOBeAa6jpkx0x8BghDTgXgGuvLggYMI1xhmbBJw2zx/4AGCEJRqmLa6jqXTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIB2zx/4DBwFBEBFn8CcFiAQgFtbds8EgHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wATAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAFAh+QGCAL0RUUf5EBPy9NIf0gfUMIFE9lE2uhPy9AKS+ADeA6RQM/sAAWLtRNDUAfhj0gABmtP/0z/TP1UgbBPg+CjXCwqDCbry4ImBAQHXAIEBAdcAWQLRAds8FgAEcAEBb5pS');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
-    initSampleTactContract_init_args({ $$type: 'SampleTactContract_init_args', owner })(builder);
+    initWallet_init_args({ $$type: 'Wallet_init_args', publicKey, walletId })(builder);
     const __data = builder.endCell();
     return { code: __code, data: __data };
 }
 
-const SampleTactContract_errors: { [key: number]: { message: string } } = {
+const Wallet_errors: { [key: number]: { message: string } } = {
     2: { message: `Stack undeflow` },
     3: { message: `Stack overflow` },
     4: { message: `Integer overflow` },
@@ -361,29 +415,30 @@ const SampleTactContract_errors: { [key: number]: { message: string } } = {
     135: { message: `Code of a contract was not found` },
     136: { message: `Invalid address` },
     137: { message: `Masterchain support is not enabled for this contract` },
-    4429: { message: `Invalid sender` },
+    17654: { message: `Invalid seqno` },
+    48401: { message: `Invalid signature` },
 }
 
-export class SampleTactContract implements Contract {
+export class Wallet implements Contract {
     
-    static async init(owner: Address) {
-        return await SampleTactContract_init(owner);
+    static async init(publicKey: bigint, walletId: bigint) {
+        return await Wallet_init(publicKey, walletId);
     }
     
-    static async fromInit(owner: Address) {
-        const init = await SampleTactContract_init(owner);
+    static async fromInit(publicKey: bigint, walletId: bigint) {
+        const init = await Wallet_init(publicKey, walletId);
         const address = contractAddress(0, init);
-        return new SampleTactContract(address, init);
+        return new Wallet(address, init);
     }
     
     static fromAddress(address: Address) {
-        return new SampleTactContract(address);
+        return new Wallet(address);
     }
     
     readonly address: Address; 
     readonly init?: { code: Cell, data: Cell };
     readonly abi: ContractABI = {
-        errors: SampleTactContract_errors
+        errors: Wallet_errors
     };
     
     private constructor(address: Address, init?: { code: Cell, data: Cell }) {
@@ -391,14 +446,11 @@ export class SampleTactContract implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: Add | 'increment' | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: TransferMessage | Deploy) {
         
         let body: Cell | null = null;
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Add') {
-            body = beginCell().store(storeAdd(message)).endCell();
-        }
-        if (message === 'increment') {
-            body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'TransferMessage') {
+            body = beginCell().store(storeTransferMessage(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
             body = beginCell().store(storeDeploy(message)).endCell();
@@ -409,9 +461,9 @@ export class SampleTactContract implements Contract {
         
     }
     
-    async getCounter(provider: ContractProvider) {
+    async getSeqno(provider: ContractProvider) {
         let builder = new TupleBuilder();
-        let source = (await provider.get('counter', builder.build())).stack;
+        let source = (await provider.get('seqno', builder.build())).stack;
         let result = source.readBigNumber();
         return result;
     }

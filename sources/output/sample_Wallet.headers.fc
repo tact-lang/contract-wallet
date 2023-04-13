@@ -1,0 +1,80 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;;
+;; Header files for Wallet
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_verify_address
+slice __tact_verify_address(slice address) inline;
+
+;; __tact_store_address
+builder __tact_store_address(builder b, slice address) inline;
+
+;; __tact_my_balance
+int __tact_my_balance() inline;
+
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) inline;
+
+;; __tact_context_get
+(int, slice, int, slice) __tact_context_get() inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; __tact_store_bool
+builder __tact_store_bool(builder b, int v) inline;
+
+;; $Deploy$_load
+(slice, ((int))) $Deploy$_load(slice sc_0) inline;
+
+;; $DeployOk$_store
+builder $DeployOk$_store(builder build_0, (int) v) inline;
+
+;; $DeployOk$_store_cell
+cell $DeployOk$_store_cell((int) v) inline;
+
+;; $TransferMessage$_load
+(slice, ((slice, slice))) $TransferMessage$_load(slice sc_0) inline;
+
+;; $Wallet$_store
+builder $Wallet$_store(builder build_0, (int, int, int) v) inline;
+
+;; $Wallet$_load
+(slice, ((int, int, int))) $Wallet$_load(slice sc_0) inline;
+
+;; $Wallet$init$_load
+(slice, ((int, int))) $Wallet$init$_load(slice sc_0) inline;
+
+;; $Wallet$_contract_init
+(int, int, int) $Wallet$_contract_init(int $publicKey, int $walletId) impure inline_ref;
+
+;; $Wallet$_contract_load
+(int, int, int) $Wallet$_contract_load() impure inline_ref;
+
+;; $Wallet$_contract_store
+() $Wallet$_contract_store((int, int, int) v) impure inline;
+
+;; $global_send
+() $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
+
+;; $Wallet$_fun_processTransfer
+((int, int, int), ()) $Wallet$_fun_processTransfer((int, int, int) $self, (slice, slice) $msg, int $external) impure inline_ref;
+
+;; $Wallet$_fun_seqno
+((int, int, int), int) $Wallet$_fun_seqno((int, int, int) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_bounce_to_value_mode_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body(int bounce, slice to, int value, int mode, cell body) inline;
+
+;; $Wallet$_fun_forward
+((int, int, int), ()) $Wallet$_fun_forward((int, int, int) $self, slice $to, cell $body) impure inline_ref;
+
+;; $Wallet$_fun_reply
+((int, int, int), ()) $Wallet$_fun_reply((int, int, int) $self, cell $body) impure inline;
+
+;; $DeployOk$_constructor_queryId
+((int)) $DeployOk$_constructor_queryId(int queryId) inline;
