@@ -32,10 +32,14 @@
     var (($self'publicKey, $self'seqno, $self'walletId, $self'allowances)) = $self;
     int $mode = $pkg~load_uint(8);
     if (($mode == 0)) {
-        ($self'publicKey, $self'seqno, $self'walletId, $self'allowances)~$Wallet$_fun_sendTransfer($pkg);
+        while ((slice_refs($pkg) > 0)) {
+            ($self'publicKey, $self'seqno, $self'walletId, $self'allowances)~$Wallet$_fun_processOperation(begin_parse($pkg~load_ref()));
+        }
     } elseif (($mode == 1)) {
-        $self'allowances~__tact_dict_set_slice_int(267, $pkg~__tact_load_address(), true, 1);
+        ($self'publicKey, $self'seqno, $self'walletId, $self'allowances)~$Wallet$_fun_sendTransfer($pkg);
     } elseif (($mode == 2)) {
+        $self'allowances~__tact_dict_set_slice_int(267, $pkg~__tact_load_address(), true, 1);
+    } elseif (($mode == 3)) {
         $self'allowances~__tact_dict_set_slice_int(267, $pkg~__tact_load_address(), null(), 1);
     }
     return (($self'publicKey, $self'seqno, $self'walletId, $self'allowances), ());

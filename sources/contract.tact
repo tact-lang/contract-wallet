@@ -55,11 +55,15 @@ contract Wallet {
 
     fun processOperation(pkg: Slice) {
         let mode: Int = pkg.loadUint(8); // Operation type
-        if (mode == 0) {
-            self.sendTransfer(pkg);
+        if (mode == 0) { // Multiop
+            while(pkg.refs() > 0) {
+                self.processOperation(pkg.loadRef().beginParse());
+            }
         } else if (mode == 1) {
-            self.allowances.set(pkg.loadAddress(), true);
+            self.sendTransfer(pkg);
         } else if (mode == 2) {
+            self.allowances.set(pkg.loadAddress(), true);
+        } else if (mode == 3) {
             self.allowances.set(pkg.loadAddress(), null);
         }
     }

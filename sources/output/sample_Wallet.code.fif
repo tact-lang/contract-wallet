@@ -197,31 +197,52 @@ PROGRAM{
     0 EQINT
     IF:<{
       NIP
-      $Wallet$_fun_sendTransfer INLINECALLDICT
+      WHILE:<{
+        DUP
+        SREFS
+        0 GTINT
+      }>DO<{
+        LDREF
+        SWAP
+        CTOS
+        s1 s5 XCHG
+        s1 s4 XCHG
+        s3 s3 s0 XCHG3
+        $Wallet$_fun_processOperation INLINECALLDICT
+        4 ROLL
+      }>
+      DROP
     }>ELSE<{
       OVER
       1 EQINT
       IF:<{
-        267 PUSHINT
-        s2 POP
-        __tact_load_address INLINECALLDICT
         NIP
-        TRUE
-        1 PUSHINT
-        __tact_dict_set_slice_int INLINECALLDICT
+        $Wallet$_fun_sendTransfer INLINECALLDICT
       }>ELSE<{
-        SWAP
+        OVER
         2 EQINT
         IF:<{
           267 PUSHINT
-          SWAP
+          s2 POP
           __tact_load_address INLINECALLDICT
           NIP
-          PUSHNULL
+          TRUE
           1 PUSHINT
           __tact_dict_set_slice_int INLINECALLDICT
         }>ELSE<{
-          DROP
+          SWAP
+          3 EQINT
+          IF:<{
+            267 PUSHINT
+            SWAP
+            __tact_load_address INLINECALLDICT
+            NIP
+            PUSHNULL
+            1 PUSHINT
+            __tact_dict_set_slice_int INLINECALLDICT
+          }>ELSE<{
+            DROP
+          }>
         }>
       }>
     }>
