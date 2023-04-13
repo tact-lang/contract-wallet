@@ -380,8 +380,8 @@ function initWallet_init_args(src: Wallet_init_args) {
 }
 
 async function Wallet_init(publicKey: bigint, walletId: bigint) {
-    const __code = Cell.fromBase64('te6ccgECFQEAAwoAART/APSkE/S88sgLAQIBIAIDAgFIBAUCPPLbPFUC2zwwyPhDAcx/AcoAVSBQI8v/yz/LP8ntVBESAqbQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBQI8v/yz/LP8ntVBEGAgEgCgsC0HAh10nCH5UwINcLH94Cklt/4CGCENOBeAa6jpkx0x8BghDTgXgGuvLggYMI1xhmbBJw2zx/4AGCEJRqmLa6jqXTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIB2zx/4DBwFAcBFn8CcFiAQgFtbds8CAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAJAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+ZL7Z5tnjYYwRDAIBIA0OAAIhAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgPEAARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1OUzJqUnBTMXdKZVJ0QUVqRXoxdkt2Q2hzZTN1R1RMUGZnYjNZQ0VCYU15WYIAFi7UTQ1AH4Y9IAAZrT/9M/0z9VIGwT4Pgo1wsKgwm68uCJgQEB1wCBAQHXAFkC0QHbPBMBYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHAUAARwAQBQIfkBggC9EVFH+RAT8vTSH9IH1DCBRPZRNroT8vQCkvgA3gOkUDP7AA==');
-    const __system = Cell.fromBase64('te6cckECFwEAAxQAAQHAAQEFoHL9AgEU/wD0pBP0vPLICwMCASAGBAI88ts8VQLbPDDI+EMBzH8BygBVIFAjy//LP8s/ye1UFQUBYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHAUAgFIDwcCASANCAIBIAwJAgFICwoAdbJu40NWlwZnM6Ly9RbU5TMmpScFMxd0plUnRBRWpFejF2S3ZDaHNlM3VHVExQZmdiM1lDRUJhTXlZggABGwr7tRNDSAAGAAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIRvmS+2ebZ42GMFQ4AAiECptAB0NMDAXGwowH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIVFBTA28E+GEC+GLbPFUS2zzy4ILI+EMBzH8BygBVIFAjy//LP8s/ye1UFRAC0HAh10nCH5UwINcLH94Cklt/4CGCENOBeAa6jpkx0x8BghDTgXgGuvLggYMI1xhmbBJw2zx/4AGCEJRqmLa6jqXTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIB2zx/4DBwFBEBFn8CcFiAQgFtbds8EgHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wATAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAFAh+QGCAL0RUUf5EBPy9NIf0gfUMIFE9lE2uhPy9AKS+ADeA6RQM/sAAWLtRNDUAfhj0gABmtP/0z/TP1UgbBPg+CjXCwqDCbry4ImBAQHXAIEBAdcAWQLRAds8FgAEcAEBb5pS');
+    const __code = Cell.fromBase64('te6ccgECEgEAAggAART/APSkE/S88sgLAQIBIAIDAgFIBAUCPPLbPFUC2zwwyPhDAcx/AcoAVSBQI8v/yz/LP8ntVA4PAqTQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggwm6AYEE/7qx8uCIVFBTA28E+GEC+GLbPFUS2zzy4ILI+EMBzH8BygBVIFAjy//LP8s/ye1UDgYCASAHCAFucCHXScIflTAg1wsf3gKSW3/gAYIQ04F4BrqOmNMfAYIQ04F4Brry4IGDCNcYZmwScNs8f+AwcBECEb5kvtnm2eNhjA4JAgEgCgsAAiEAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcNl5xm6MObwnrLahMTW43eWAIBSAwNABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVE3VmhHcEt2c0JMVVc0VHZ6TkRKV2ZaZ2o3bmZxaEF2N0g1enZhU3BmZTlQggAUztRNDUAfhj0gABmtP/0z/TP1UgbBPggQEB1wCBAQHXAFkC0QHbPBABYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHARAARwAQBQIfkBggC9EVFH+RAT8vTSH9IH1DCBRPZRNroT8vQCkvgA3gOkUDP7AA==');
+    const __system = Cell.fromBase64('te6cckECFAEAAhIAAQHAAQEFoHL9AgEU/wD0pBP0vPLICwMCASAGBAI88ts8VQLbPDDI+EMBzH8BygBVIFAjy//LP8s/ye1UEgUBYnAh10nCH5UwINcLH96CENOBeAa6jpjTHwGCENOBeAa68uCBgwjXGGZsEn/bPH/gMHARAgFIDwcCASANCAIBIAwJAgFICwoAdbJu40NWlwZnM6Ly9RbVE3VmhHcEt2c0JMVVc0VHZ6TkRKV2ZaZ2o3bmZxaEF2N0g1enZhU3BmZTlQggABGwr7tRNDSAAGAAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcNl5xm6MObwnrLahMTW43eWAIRvmS+2ebZ42GMEg4AAiECpNAB0NMDAXGwowH6QAEg10mBAQu68uCIINcLCiCDCboBgQT/urHy4IhUUFMDbwT4YQL4Yts8VRLbPPLggsj4QwHMfwHKAFUgUCPL/8s/yz/J7VQSEAFucCHXScIflTAg1wsf3gKSW3/gAYIQ04F4BrqOmNMfAYIQ04F4Brry4IGDCNcYZmwScNs8f+AwcBEAUCH5AYIAvRFRR/kQE/L00h/SB9QwgUT2UTa6E/L0ApL4AN4DpFAz+wABTO1E0NQB+GPSAAGa0//TP9M/VSBsE+CBAQHXAIEBAdcAWQLRAds8EwAEcAHv8STn');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -446,14 +446,11 @@ export class Wallet implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: TransferMessage | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: TransferMessage) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'TransferMessage') {
             body = beginCell().store(storeTransferMessage(message)).endCell();
-        }
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
-            body = beginCell().store(storeDeploy(message)).endCell();
         }
         if (body === null) { throw new Error('Invalid message type'); }
         

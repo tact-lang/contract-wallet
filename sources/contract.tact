@@ -5,7 +5,7 @@ message TransferMessage {
     transfer: Slice as remaining;
 }
 
-contract Wallet with Deployable {
+contract Wallet {
 
     publicKey: Int as uint256;
     seqno: Int as uint64;
