@@ -47,6 +47,11 @@
 ;; Receivers of a Contract Wallet
 ;;
 
+((int, int, int), ()) $Wallet$_internal_any((int, int, int) $self, slice $msg) impure inline {
+    var ($self'publicKey, $self'seqno, $self'walletId) = $self;
+    return (($self'publicKey, $self'seqno, $self'walletId), ());
+}
+
 (((int, int, int)), ()) $Wallet$_internal_binary_TransferMessage((int, int, int) $self, (slice, slice) $msg) impure inline {
     var ($self'publicKey, $self'seqno, $self'walletId) = $self;
     var ($msg'signature, $msg'transfer) = $msg;
@@ -81,7 +86,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmQ7VhGpKvsBLUW4TvzNDJWfZgj7nfqhAv7H5zvaSpfe9P";
+    return "ipfs://QmUQJHSibHDNDZhh41EiMXDg9mhAAX5BJTpXSbFyNqPCQU";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -112,7 +117,9 @@ _ lazy_deployment_completed() method_id {
         return (self, true);
     }
     
-    return (self, false);
+    ;; Receiver fallback
+    self~$Wallet$_internal_any(in_msg);
+    return (self, true);
 }
 
 ((int, int, int), int) $Wallet$_contract_router_external((int, int, int) self, slice in_msg) impure inline_ref {

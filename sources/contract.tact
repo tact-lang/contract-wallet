@@ -44,6 +44,10 @@ contract Wallet {
         }
     }
 
+    receive(msg: Slice) {
+        // Fallback
+    }
+
     receive(msg: TransferMessage) {
         self.processTransfer(msg, false);
     }

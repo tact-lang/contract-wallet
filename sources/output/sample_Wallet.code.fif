@@ -9,6 +9,7 @@ PROGRAM{
   DECLPROC $Wallet$_contract_store
   DECLPROC $Wallet$_fun_processTransfer
   DECLPROC $Wallet$_fun_seqno
+  DECLPROC $Wallet$_internal_any
   DECLPROC $Wallet$_internal_binary_TransferMessage
   DECLPROC $Wallet$_external_binary_TransferMessage
   85143 DECLMETHOD %seqno
@@ -141,6 +142,9 @@ PROGRAM{
   $Wallet$_fun_seqno PROCREF:<{
     OVER
   }>
+  $Wallet$_internal_any PROCINLINE:<{
+    DROP
+  }>
   $Wallet$_internal_binary_TransferMessage PROCINLINE:<{
     FALSE
     $Wallet$_fun_processTransfer INLINECALLDICT
@@ -161,7 +165,7 @@ PROGRAM{
     289074767680806556846472852687671582181 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d5137566847704b7673424c55573454767a4e444a57665a676a376e66716841763748357a7661537066653950} PUSHSLICE
+    x{697066733a2f2f516d55514a4853696248444e445a6868343145694d584467396d6841415835424a547058536246794e7150435155} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -193,8 +197,8 @@ PROGRAM{
       $Wallet$_internal_binary_TransferMessage INLINECALLDICT
       TRUE
     }>
-    DROP
-    FALSE
+    $Wallet$_internal_any INLINECALLDICT
+    TRUE
   }>
   $Wallet$_contract_router_external PROCREF:<{
     0 PUSHINT
