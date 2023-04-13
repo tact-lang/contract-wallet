@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Wallet
-BOC Size: 541 bytes
+BOC Size: 851 bytes
 
 # Types
-Total Types: 7
+Total Types: 5
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -17,26 +17,24 @@ Signature: `Context{bounced:bool,sender:address,value:int257,raw:^slice}`
 TLB: `_ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters`
 Signature: `SendParameters{bounce:bool,to:address,value:int257,mode:int257,body:Maybe ^cell,code:Maybe ^cell,data:Maybe ^cell}`
 
-## Deploy
-TLB: `deploy#946a98b6 queryId:uint64 = Deploy`
-Signature: `Deploy{queryId:uint64}`
+## WalletOperation
+TLB: `wallet_operation#a6d4ab8a signature:fixed_bytes64 operation:remainder<slice> = WalletOperation`
+Signature: `WalletOperation{signature:fixed_bytes64,operation:remainder<slice>}`
 
-## DeployOk
-TLB: `deploy_ok#aff90f57 queryId:uint64 = DeployOk`
-Signature: `DeployOk{queryId:uint64}`
-
-## FactoryDeploy
-TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
-Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
-
-## TransferMessage
-TLB: `transfer_message#d3817806 signature:fixed_bytes64 transfer:remainder<slice> = TransferMessage`
-Signature: `TransferMessage{signature:fixed_bytes64,transfer:remainder<slice>}`
+## ExternalOperation
+TLB: `external_operation#e45771e6 operation:remainder<slice> = ExternalOperation`
+Signature: `ExternalOperation{operation:remainder<slice>}`
 
 # Get Methods
-Total Get Methods: 1
+Total Get Methods: 4
 
 ## seqno
+
+## walletId
+
+## publicKey
+
+## allowances
 
 # Error Codes
 2: Stack undeflow
@@ -63,5 +61,8 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+8522: Invalid walletId
+12383: Sender is not allowed to send messages
 17654: Invalid seqno
 48401: Invalid signature
+54515: Transfer expired
